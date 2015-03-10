@@ -41,7 +41,7 @@ class TestDataset(object):
     def size(self):
         return self.__size
 
-    def test_data(self):
+    def test_data(self, indices=None):
         if indices is None:
             return self.__data
         else:

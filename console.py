@@ -13,11 +13,15 @@ class Console(object):
                 training_dataset.training_data(training_indices),
                 training_dataset.training_target(training_indices)
                 )
-            scores[i] = 100 * (1 - classifier.score(
-                training_dataset.test_data(test_indices),
-                training_dataset.test_target(test_indices)
-                ))
+            prediction = classifier.predict(training_dataset.test_data(test_indices))
+            target = training_dataset.test_target(test_indices)
+            error = np.zeros([10, 10], dtype=int)
+            for j in range(len(test_indices)):
+                error[target[j], prediction[j]] += 1;
+            scores[i] = 100 * (1 - error.trace() / len(test_indices))
             print('{0:f}'.format(scores[i]))
+            print(error)
+            print()
         print('Mean: {0:f}'.format(scores.mean()))
         return scores.mean()
 
@@ -28,4 +32,10 @@ class Console(object):
         print('Predicting ... ', end='', flush=True)
         prediction = classifier.predict(test_dataset.test_data())
         print('done.')
-        pd.DataFrame(prediction).to_csv(out)
+        df = pd.DataFrame(
+            data=prediction,
+            index=np.arange(1, test_dataset.size() + 1),
+            columns=['Label'],
+            dtype=int
+            )
+        df.to_csv(out, index_label='ImageId')

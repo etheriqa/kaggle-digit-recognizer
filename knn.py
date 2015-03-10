@@ -64,4 +64,6 @@ if __name__ == '__main__':
         console.cross_validation(pipeline, training_dataset, args.cv_n_folds)
     else:
         test_dataset = TestDataset(size=args.test_size)
+        if args.augment:
+            test_dataset = AugmentedTestDataset(test_dataset, augmenter)
         console.write_prediction(pipeline, training_dataset, test_dataset, args.output)

@@ -101,7 +101,7 @@ class AugmentedTestDataset(object):
         self.__augmenter = augmenter
 
     def size(self):
-        pass
+        return self.__dataset.size()
 
     def test_data(self, indices=None):
         return self.__augmenter.augment_test_data(self.__dataset.test_data(indices))
