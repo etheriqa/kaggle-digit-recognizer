@@ -4,12 +4,12 @@ import pandas as pd
 
 class TrainingDataset(object):
     def __init__(self, csv='data/train.csv', size=42000, shuffle=True):
-        samples = pd.read_csv(csv).values.astype(float)
+        samples = pd.read_csv(csv).values
         if shuffle:
             np.random.shuffle(samples)
         self.__size = size
-        self.__data = samples[:size, 1:]
-        self.__target = samples[:size, 0]
+        self.__data = samples[:size, 1:].astype(float)
+        self.__target = samples[:size, 0].astype(int)
 
     def size(self):
         return self.__size
