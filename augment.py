@@ -19,7 +19,7 @@ class Augmenter(object):
         self.__step = (
             int((shape[0] - offset[0] * 2 - length[0]) / slide[0]) if slide[0] > 0 else 1,
             int((shape[1] - offset[1] * 2 - length[1]) / slide[1]) if slide[1] > 0 else 1,
-            )
+        )
 
     def factor(self):
         return (self.__slide[0] + 1) * (self.__slide[1] + 1)
@@ -31,12 +31,12 @@ class Augmenter(object):
         augmented = np.empty((
             training_data.shape[0] * self.factor(),
             self.dimension()
-            ))
+        ))
         offsets = lambda i: range(
             self.__offset[i],
             self.__offset[i] + self.__step[i] * (self.__slide[i] + 1),
             self.__step[i]
-            )
+        )
         index = 0
         for i in range(training_data.shape[0]):
             image = training_data[i].reshape(self.__shape)
@@ -60,7 +60,7 @@ class Augmenter(object):
         augmented = np.empty((
             test_data.shape[0],
             self.dimension()
-            ))
+        ))
         for i in range(test_data.shape[0]):
             image = test_data[i].reshape(self.__shape)
             x = self.__offset[0] + self.__step[0] * self.__slide[0] / 2

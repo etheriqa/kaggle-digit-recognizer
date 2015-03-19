@@ -1,6 +1,36 @@
 import numpy as np
 import pandas as pd
 
+from augment import *
+
+
+class DatasetFactory():
+    def create_training_dataset(self, **kwargs):
+        training_set = TrainingDataset(size=kwargs['training_size'])
+        if kwargs['augment']:
+            training_dataset = AugmentedTrainingDataset(
+                training_set,
+                self._augmenter(**kwargs)
+            )
+        return training_set
+
+    def create_test_dataset(self, **kwargs):
+        test_set = TestDataset(size=kwargs['test_size'])
+        if kwargs['augment']:
+            test_dataset = AugmentedTestDataset(
+                test_set,
+                self._augmenter(**kwargs)
+            )
+        return test_set
+
+    def _augmenter(self, **kwargs):
+        return Augmenter(
+            (28, 28),
+            (kwargs['augment_offset'], kwargs['augment_offset']),
+            (kwargs['augment_length'], kwargs['augment_length']),
+            (kwargs['augment_slide'], kwargs['augment_slide'])
+        )
+
 
 class TrainingDataset(object):
     def __init__(self, csv='data/train.csv', size=42000, shuffle=True):
