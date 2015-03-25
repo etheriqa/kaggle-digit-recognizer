@@ -2,6 +2,7 @@ from sklearn.decomposition import PCA
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import LinearSVC
 import theano.tensor as T
 
 from nn import NeuralNetworkClassifier, HiddenLayer
@@ -31,6 +32,10 @@ class ModelFactory(object):
                     HiddenLayer(d_input, n_hidden_units, T.nnet.sigmoid),
                     HiddenLayer(n_hidden_units, d_output, T.nnet.softmax),
                 ]
+            ))
+        elif kwargs['model'] == 'svm':
+            steps.append(LinearSVC(
+                C=kwargs['svm_c'],
             ))
         else:
             raise ValueError('Unknown model')
