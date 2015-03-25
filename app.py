@@ -63,6 +63,7 @@ if __name__ == '__main__':
     parser.add_argument('--cv-n-folds', default=5, type=int)
     parser.add_argument('--knn-n-neighbors', default=5, type=int)
     parser.add_argument('--knn-p', default=2, type=int)
+    parser.add_argument('--nn-n-hidden-units', default=100, type=int)
     parser.add_argument('--augment', dest='augment', action='store_true')
     parser.add_argument('--no-augment', dest='augment', action='store_false')
     parser.set_defaults(augment=False)
